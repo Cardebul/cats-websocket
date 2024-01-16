@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    width: 90vh;
+    float: right;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border: #333333 solid;
+  }
+  
+  .messageList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+  }
+  
+  .messageItem {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+  
+  .messageForm {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .messageInput {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+  }
+  
+  ui/button-secondary/button-secondary.module.css
+  
+  .buttonSecondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fffcff;
+    color: #333333;
+    font-size: 14px;
+  }
+  
+  .buttonSecondary:hover {
+    background-color: #47be5b;
+  }
