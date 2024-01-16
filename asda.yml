@@ -13,13 +13,11 @@ services:
       - pg_data:/var/lib/postgresql/data
     networks:
       - webnet
-    restart: on-failure
 
   redis:
     image: redis:latest
     networks: 
       - redisnet
-    restart: on-failure
 
   django_wsgi:
     container_name: django_wsgi
@@ -42,8 +40,6 @@ services:
       - redisnet
     links:
       - redis
-    restart: on-failure
-    
   
   django_asgi:
     container_name: django_asgi
@@ -67,7 +63,6 @@ services:
       - redisnet
     links:
       - redis
-    restart: on-failure
   
   nginx:
     image: nginx:1.15.0
@@ -83,7 +78,6 @@ services:
       - webnet
     ports:
       - "80:80"
-    restart: on-failure
   
   frontend:
     env_file: .env
