@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChatList } from "./chat-list";
 import { ChatWindow } from "./chat-window";
 import { getUsers } from "../../utils/api";
-import { getChat } from "../../utils/api";
 
 import styles from "./chat-page.module.css";
 
@@ -15,22 +14,10 @@ export const ChatPage = () => {
   
 
   useEffect(() => {
-    if (selectedUserId) {
-      getChat(selectedUserId, localStorage.getItem("auth_token"))
-      .then((chatHistory) => {
-        console.log(chatHistory);
-        const newMessages = chatHistory.results.map((messageData) => `${messageData.username}: ${messageData.message}`);
-        console.log(newMessages);
-        setMessages(newMessages);
-      })
-      .catch((error) => {
-        console.error("Ошибка при загрузке истории чата:", error);
-        setMessages([]);
-      });
-    }
+
     getUsers()
       .then((data) => {
-        setUsers(data.results);
+        setUsers(data);
       })
       .catch((error) => {
         console.error("Ошибка при получении списка пользователей:", error);
@@ -67,11 +54,6 @@ export const ChatPage = () => {
 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
-    setMessages([]); // Очищаем список сообщений при выборе нового пользователя
-  };
-
-  const handleGeneralChatClick = () => {
-    setSelectedUserId(null);
     setMessages([]);
   };
 
@@ -85,13 +67,11 @@ export const ChatPage = () => {
         <ChatList
           users={users}
           onUserClick={handleUserClick}
-          onGeneralChatClick={handleGeneralChatClick}
         />
       </div>
       <div>
         {selectedUserId !== null && (
           <ChatWindow
-            messages={messages}
             userId={selectedUserId}
             onSubmitMessage={handleSendMessage}
           />

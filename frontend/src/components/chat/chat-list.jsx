@@ -1,9 +1,8 @@
 import React from "react";
-import { ButtonSecondary } from "../ui/button-secondary/button-secondary";
-import styles from "./chat-list.module.css";
 
 
-export const ChatList = ({ users, onUserClick, onGeneralChatClick }) => {
+
+export const ChatList = ({ users, onUserClick }) => {
   return (
     <ul>
       <li>

@@ -1,4 +1,7 @@
 #!/bin/bash
+
+echo "-----------GOOOOOOOD--------- "
+
 cd /app
 
 python manage.py collectstatic --noinput

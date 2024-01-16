@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import Achievement, Cat, User, ChatMessage, ChatRoom
 from .serializers import AchievementSerializer, CatSerializer, UserGetSerializer, GetChatSerializer
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from logging import info as i
 
 class CatViewSet(viewsets.ModelViewSet):
@@ -32,32 +32,34 @@ class GetUser(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserGetSerializer
     permission_classes = (AllowAny,)
+    pagination_class = None
+    
 
 
 class GetChat(ListAPIView):
     queryset = ChatMessage.objects.all()
     serializer_class = GetChatSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = None
     
-    def dispatch(self, request, *args, **kwargs):
-        i(f'GET QUERYSET USERS DIsp')
-        
-        return super().dispatch(request, *args, **kwargs)
+    
+
     
     def get_queryset(self):
         room_id = self.kwargs['pk']
-        i(f'GET QUERYSET USERS ')
-        i(type(room_id))
-        i(room_id)
+        i(f'{type(room_id)}  {room_id}  GET QUERYSET USERS ')
         if not room_id:
-            w = ChatMessage.objects.filter(chat_id=1)
-            i(w)
+            w = ChatMessage.objects.filter(chat=None)
+            i(f'not room   {w}   ')
             return w
         user, user_to = sorted([room_id,self.request.user.id])
         room, _ = ChatRoom.objects.get_or_create(user_id=user, user_to_id=user_to)
-        i(room)
         w = ChatMessage.objects.filter(chat=room)
-        i(w)
+        i(f'room  {room} {w}')
         return w
+    def get_object(self):
+        i('OBJ')
+        return ChatMessage.objects.all()
     
 
 from django.shortcuts import render

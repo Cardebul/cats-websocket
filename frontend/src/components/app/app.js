@@ -59,9 +59,9 @@ function App() {
               <ProtectedRoute path="/cats/:id">
                 <CardPage data={currentCard} setData={setCurrentCard} />
               </ProtectedRoute>
-              <Route path='/chat' >
+              <ProtectedRoute path='/chat' >
                 <ChatPage/>
-              </Route>
+              </ProtectedRoute>
             </Switch>
           </main>
           <Footer />

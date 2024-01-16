@@ -26,6 +26,8 @@ export const loginUser = (username, password) => {
     .then((data) => {
       if (data.auth_token) {
         localStorage.setItem("auth_token", data.auth_token);
+        localStorage.setItem("username", username);
+
         return data;
       }
       return null;

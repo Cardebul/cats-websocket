@@ -89,7 +89,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         i('addchatMESS')
         if self.flag:
             return ChatMessage.objects.create(chat=self.chat_room, user=self.user, message=message)
-        return ChatMessage.objects.create(chat_id=1, user=self.user, message=message)
+        return ChatMessage.objects.create(chat=None, user=self.user, message=message)
         
         
         
