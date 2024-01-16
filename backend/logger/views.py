@@ -1,6 +1,7 @@
 import logging
-import time
 import threading
+import time
+
 from django.http import HttpResponse
 
 logger = logging.getLogger("logger")

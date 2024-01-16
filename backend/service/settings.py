@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,9 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=9qs#^__d!m8qntoh18$^cthj17c7!vc8k@dj(i$1dx^&!t6)5'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-ALLOWED_HOSTS = ['*']
+
+DEBUG = os.getenv('DEBUG')
+
+ALLOWED_HOSTS = [os.getenv("IP"), os.getenv("LOCAL"),
+                 os.getenv("NAME_LOCAL"), os.getenv("DOMAIN_URL")]
 
 INSTALLED_APPS = [
     "daphne",
@@ -69,49 +77,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'service.wsgi.application'
-
-POSTGRES_DB='service'
-POSTGRES_USER='service_user'
-POSTGRES_PASSWORD='service_password'
-DB_NAME='service'
-
-
-DB_HOST='db'
-DB_PORT='5432'
 
 DATABASES = {
     'default': {
-        # Меняем настройку Django: теперь для работы будет использоваться
-        # бэкенд postgresql
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', POSTGRES_DB),
-        'USER': os.getenv('POSTGRES_USER', POSTGRES_USER),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', POSTGRES_PASSWORD),
-        'HOST': os.getenv('DB_HOST', DB_HOST),
-        'PORT': os.getenv('DB_PORT', DB_PORT)
+        'NAME': os.getenv('POSTGRES_DB', ''),
+        'USER': os.getenv('POSTGRES_USER', ''),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
+        'PORT': os.getenv('DB_PORT', '')
     }
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3030',
-] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    'http://localhost:3030',
-]
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -140,8 +120,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-# Указываем корневую директорию для сборки статических файлов;
-# в контейнере это будет /app/collected_static
+
+
 STATIC_ROOT = BASE_DIR / 'collected_static'
 
 MEDIA_URL = '/media/'
@@ -203,3 +183,14 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'app.User'
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+    'http://localhost:9000',
+    'http://localhost',
+    
+    
+
+]
+
+CSRF_TRUSTED_ORIGINS = [f'https://{NAME}' for NAME in ALLOWED_HOSTS]

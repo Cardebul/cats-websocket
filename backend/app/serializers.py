@@ -5,7 +5,7 @@ import webcolors
 from django.core.files.base import ContentFile
 from rest_framework import serializers
 
-from .models import Achievement, AchievementCat, Cat, User, ChatMessage
+from .models import Achievement, AchievementCat, Cat, ChatMessage, User
 
 
 class Hex2NameColor(serializers.Field):
@@ -27,8 +27,9 @@ class AchievementSerializer(serializers.ModelSerializer):
         model = Achievement
         fields = ('id', 'achievement_name')
 
+
 class UserGetSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = User
         fields = ('id', 'username')
@@ -36,10 +37,11 @@ class UserGetSerializer(serializers.ModelSerializer):
 
 class GetChatSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    
+
     class Meta:
         model = ChatMessage
         fields = ('id', 'username', 'message')
+
 
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):

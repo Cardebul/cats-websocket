@@ -2,6 +2,7 @@ asgiref==3.7.2
 attrs==23.2.0
 autobahn==23.6.2
 Automat==22.10.0
+autopep8==2.0.4
 certifi==2023.11.17
 cffi==1.16.0
 channels==4.0.0
@@ -19,6 +20,7 @@ djoser==2.2.2
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
+isort==5.13.2
 msgpack==1.0.7
 oauthlib==3.2.2
 pillow==10.2.0
@@ -26,9 +28,11 @@ psycopg==3.1.17
 psycopg2==2.9.9
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
+pycodestyle==2.11.1
 pycparser==2.21
 PyJWT==2.8.0
 pyOpenSSL==23.3.0
+python-dotenv==1.0.0
 python3-openid==3.2.0
 pytz==2023.3.post1
 redis==5.0.1
